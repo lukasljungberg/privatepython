@@ -1,0 +1,48 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block content %}
+    <h1>Welcome to My Website</h1>
+    <p>Select an option below:</p>
+
+    <div class="grid-container">
+        <a href="py_zero" class="grid-item">py.zero</a>
+        <a href="py_hero" class="grid-item">py.hero</a>
+        <a href="pylib_zero" class="grid-item">pylib.zero</a>
+        <a href="pylib_hero" class="grid-item">pylib.hero</a>
+        <a href="pynet_zero" class="grid-item">pynet.zero</a>
+        <a href="pynet_hero" class="grid-item">pynet.hero</a>
+        <a href="pyhack_zero" class="grid-item">pyhack.zero</a>
+        <a href="pyhack_hero" class="grid-item">pyhack.hero</a>
+    </div>
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            background: #2C3E3A; /* Dark greenish background for grid items */
+            color: #E0E0E0; /* Light gray text for readability */
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            text-decoration: none; /* Remove underline */
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for a lifted effect */
+        }
+
+        .grid-item:hover {
+            background: #3A6A55; /* Muted Python Green for hover effect */
+            color: white; /* White text on hover */
+        }
+
+    </style>
+
+{% endblock %}

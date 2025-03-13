@@ -1,0 +1,148 @@
+{% extends 'website/ide_base.html' %}
+
+{% block title %}IDE{% endblock %}
+
+{% block content %}
+<head>
+    <title>Python IDE</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    <style>
+        .CodeMirror {
+            border: 1px dashed #b4b4b4;
+            color: rgb(70, 70, 70);
+            font-weight: bolder;
+            font-size: larger;
+            height: 200px;
+            text-align: left;
+            height: 70%;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-left: 5%;
+            padding-right: 5%;
+            min-width: 90%;
+
+        }
+        h1 {
+            text-align: center;    
+        }
+        pre {
+            padding: 10px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        input {
+            min-width: 90%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 5px;
+            min-width: 90%;
+        }
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+        .center .right {
+            align-self: flex-end;
+            margin-right: 100px;
+        }
+        .center .left {
+            align-self: flex-start;
+            margin-left: 100px;
+        }
+        .out {
+            min-height: 200px;
+        }
+    </style>
+</head>
+<div class="center">
+    <h1>Python IDE (Client-Side)</h1>
+    <textarea id="code" placeholder="Write Python code here..."></textarea>
+    <button id="run-btn">Run Code</button>
+    <div class="out left">
+        <h3 class="">Output:</h3>
+        <pre id="output"></pre>
+    </div>
+
+
+    <h2>Package Installer</h2>
+    <input type="text" id="package" placeholder="Enter package name">
+    <button onclick="installPackage()">Install</button>
+    <pre id="install-output"></pre>
+</div>
+<script>
+    let pyodideReadyPromise = loadPyodide();
+    document.getElementById("run-btn").addEventListener("click", runPython);
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: "python",
+        lineNumbers: true,
+        theme: "default"
+    });
+
+    async function runPython() {
+        let outputElement = document.getElementById("output");
+        outputElement.textContent = "Running...";
+
+        let pyodide = await pyodideReadyPromise;
+        let code = editor.getValue();
+
+        try {
+            // Redirect print output to a buffer
+            pyodide.runPython(`
+                import sys
+                from io import StringIO
+                sys.stdout = sys.stderr = buffer = StringIO()
+            `);
+
+            let result = await pyodide.runPythonAsync(code);
+            let output = pyodide.runPython("buffer.getvalue()").trim(); // Capture print output
+
+            // If there's printed output, show it; otherwise, show returned value
+            outputElement.textContent = output || (result !== undefined ? result.toString() : "No output");
+
+        } catch (error) {
+            outputElement.textContent = "Error: " + error;
+        }
+    }
+
+    async function installPackage() {
+        let package = document.getElementById("package").value.trim();
+        let installOutput = document.getElementById("install-output");
+        
+        if (!package) {
+            installOutput.textContent = "Please enter a package name.";
+            return;
+        }
+
+        installOutput.textContent = `Installing ${package}...`;
+        
+        let pyodide = await pyodideReadyPromise;
+        await pyodide.loadPackage("micropip");
+        try {
+            // Attempt to load the package if it's built into Pyodide
+            await pyodide.loadPackage(package);
+            installOutput.textContent = `Successfully installed: ${package}`;
+        } catch (error) {
+            try {
+                // If not in Pyodide, try installing using micropip
+                await pyodide.runPythonAsync(`
+                    import micropip
+                    await micropip.install("${package}")
+                `);
+                installOutput.textContent = `Successfully installed: ${package} using micropip`;
+            } catch (pipError) {
+                installOutput.textContent = `Error installing ${package}: ${pipError}`;
+            }
+        }
+    }
+</script>
+{% endblock %}
