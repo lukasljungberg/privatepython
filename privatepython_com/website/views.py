@@ -146,7 +146,8 @@ def check_challenge(request: HttpRequest, course_name, section, output):
     with open(os.path.join(settings.BASE_DIR, 'website', 'challenges', course_name, section+'.py'), 'r') as f:
         challenge = f.read().split('# STATIC')
     print(challenge[1].strip().replace("# Don't change", "").replace('\n', '').replace('USERNAME', request.user.username))
-    if json.loads(request.body)['code'].split("# Don't change")[1].strip().replace('\n', '') == challenge[1].strip().replace("# Don't change", "").replace('\n', '').replace('USERNAME', request.user.username) and output == request.user.username:
+    print(json.loads(request.body.decode())['code'].split("# Don't change")[1].strip().replace('\n', ''))
+    if json.loads(request.body.decode())['code'].split("# Don't change")[1].strip().replace('\n', '') == challenge[1].strip().replace("# Don't change", "").replace('\n', '').replace('USERNAME', request.user.username) and output == request.user.username:
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
     
