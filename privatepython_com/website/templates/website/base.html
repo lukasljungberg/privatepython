@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,17 +18,21 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: #121212; /* Very dark background for dark mode */
+            background: #494949; /* Very dark background for dark mode */
             color: #E0E0E0; /* Light gray text for better contrast and readability */
             line-height: 1.6;
         }
 
         .navbar {
-            background: #2D4739; /* Dark muted Python Green */
+            background: linear-gradient(#2D4739, #416c55); /* Dark muted Python Green */
             color: white;
             padding: 15px;
             text-align: right;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for more depth */
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: center;
         }
 
         .navbar a {
@@ -51,31 +56,36 @@
 
         .sidebar {
             width: 250px;
-            background: #1C3529; /* Very dark green for the sidebar */
+            background: linear-gradient(to right, #272727, #232323); /* Very dark green for the sidebar */
             color: #E0E0E0; /* Light gray text */
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow to lift the sidebar */
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar a {
-            display: block;
-            color: #A1C47E; /* Lighter green for links */
-            padding: 10px 0;
             text-decoration: none;
-            transition: 0.3s;
+            font-size: 1.2em;
+            color: #A1C47E; /* Lighter Python Green */
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
         }
-
+    
         .sidebar a:hover {
-            background: #163225; /* Slightly darker green for hover effect */
-            color: #C2D79A; /* Brighter green on hover */
+            background: #3A6A55; /* Muted Python Green on hover */
+            color: #E0E0E0; /* White text on hover */
         }
 
         .content {
             flex: 1;
+            min-width: 500px;
             padding: 20px;
-            background: #1E1E1E; /* Dark background for content */
-            color: #E0E0E0; /* Light gray text for readability */
+            background: linear-gradient(to top, #2D4739, #416c55);
+            color: #cbcbcb; /* Light gray text for readability */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Strong shadow for a lifted effect */
             border-radius: 8px;
         }
@@ -90,7 +100,9 @@
             font-weight: bold;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for footer */
         }
-
+        .logo {
+            align-self: flex-start;
+        }
 
 
     </style>
@@ -99,22 +111,31 @@
 
     <!-- Navbar -->
     <div class="navbar">
-        <a href="{% url 'index' %}">Home</a>
-        <a href="{% url 'courses' %}">Free courses!</a>
-        <a href="#">Contact</a>
+        <img class="logo" style="border-radius: 25%;" src="{% static 'images/logo.webp' %}" alt="Python Logo" width="50">
+
+        <a href="{% url 'index' %}">HOME</a>
+        <a href="{% url 'courses' %}">FREE COURSES!</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">LOGOUT</a>
+        {% else %}
+        <a href="{% url 'login' %}">LOGIN</a>
+        <a href="{% url 'register' %}">REGISTER</a>
+        {% endif %}
+
     </div>
 
     <div class="container">
         <!-- Sidebar -->
+        {% if user.is_authenticated %}
         <div class="sidebar">
-            <a href="#">Dashboard</a>
             <a href="#">Profile</a>
+            <a href="#">Dashboard</a>
             <a href="#">Private Lessons</a>
-            <a href="#">Daily Code Challange</a>
-            <a href="{% url 'ide' %}" class="open-window">IDE</a>
+            <a href="{% url 'code_editor' %}" class="open-window">Code Editor</a>
             <a href="#">Settings</a>
             <a href="#">Logout</a>
         </div>
+        {% endif %}
 
         <!-- Main Content -->
         <div class="content">

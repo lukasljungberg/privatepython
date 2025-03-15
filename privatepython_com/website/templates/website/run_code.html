@@ -1,4 +1,4 @@
-{% extends 'website/ide_base.html' %}
+{% extends 'website/run_code_base.html' %}
 
 {% block title %}IDE{% endblock %}
 
@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
     <style>
+        body {
+            background: linear-gradient(#2D4739, #416c55); /* Dark muted Python Green */
+        }
         .CodeMirror {
             border: 1px dashed #b4b4b4;
             color: rgb(70, 70, 70);
@@ -65,19 +68,51 @@
 </head>
 <div class="center">
     <h1>Python IDE (Client-Side)</h1>
-    <textarea id="code" placeholder="Write Python code here..."></textarea>
+    <textarea id="code" placeholder="Write Python code here...">{{ code|safe }}</textarea>
     <button id="run-btn">Run Code</button>
     <div class="out left">
         <h3 class="">Output:</h3>
         <pre id="output"></pre>
     </div>
-
-
+    <button id="sbmt-btn">Submit Code</button>
     <h2>Package Installer</h2>
     <input type="text" id="package" placeholder="Enter package name">
     <button onclick="installPackage()">Install</button>
     <pre id="install-output"></pre>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const button = document.getElementById("sbmt-btn");
+        button.addEventListener("click", function () {
+            const code = document.getElementById("code").innerText;
+            const output = document.getElementById("output").innerHTML;
+            fetch('/check_challenge/{{course_name}}/{{section}}/'+output+'/', {
+                method: "POST",
+                body: JSON.stringify({code}),
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.status == 404)
+                    return false;
+                return response.json()
+            })
+            .then(data => {
+                if (!data) {
+                    alert("Wrong answer!");
+                    return;
+                }
+                else if (data.success && output == '{{user.username}}') {
+                    alert("You've made it!");
+                } else {
+                    alert("Wrong answer!");
+                }
+            });
+        });
+    });
+</script>
 <script>
     let pyodideReadyPromise = loadPyodide();
     document.getElementById("run-btn").addEventListener("click", runPython);
