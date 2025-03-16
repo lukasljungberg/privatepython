@@ -24,7 +24,7 @@ import secrets
 SECRET_KEY = secrets.token_urlsafe(50)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['py1uk3.pythonanywhere.com', 'www.py1uk3.pythonanywhere.com', '127.0.0.1:8000', '127.0.0.1']
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # Don't forget to pip install whitenoise on the server and python manage.py collectstatic
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
