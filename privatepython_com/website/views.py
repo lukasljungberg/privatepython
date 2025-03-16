@@ -152,8 +152,12 @@ def check_challenge(request: HttpRequest, course_name, section, output):
     for nr in static_code.splitlines():
         print(repr(nr))
         if str(nr).isdigit():
-            static_code = static_code.replace(nr, "")
-            print(static_code)
-    if static_code.replace('\u200b', '').strip() == unchangeable.replace('USERNAME', request.user.username) and output == request.user.username:
+            static_code = static_code.replace(nr + '\n', "")
+
+    static_code = static_code.replace('\u200b', '').replace('\n', '').strip()
+    unchangeable = unchangeable.replace('\n', '').strip().replace('USERNAME', request.user.username)
+    print(static_code)
+    print(unchangeable)
+    if static_code == unchangeable and output == request.user.username:
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
