@@ -1,18 +1,23 @@
+# Run the code to say "Hello USERNAME!"
 # Change
-x = [False, True, "USERNAME"]
-y = int(x)
-z = float(y)
-i = 0
+x = 10
+y = True
+z = [0, 10, 0]
+
 # Don't change
-a = [0, 1, 2, x]
-if isinstance(x, type(z)):
-    if isinstance(y, str):
-        if isinstance(z, type(x)):
-            print(a[3][i])
+name = "USERNAME"
+a = x in z
+b = x is b
+c = z[1] == x
+
+if not y and b:
+    print(name if c and z[2] == 10 else "Try again!")
 # STATIC
 # Don't change
-a = [0, 1, 2, x]
-if isinstance(x, type(z)):
-    if isinstance(y, str):
-        if isinstance(z, type(x)):
-            print(a[3][i])
+name = "USERNAME"
+a = x in z
+b = x is b
+c = z[1] == x
+
+if not y and b:
+    print(name if c and z[2] == 10 else "Try again!")
