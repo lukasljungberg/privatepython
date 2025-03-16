@@ -145,9 +145,23 @@ def open_challenge(request: HttpRequest, course_name, section):
 def check_challenge(request: HttpRequest, course_name, section, output):
     with open(os.path.join(settings.BASE_DIR, 'website', 'challenges', course_name, section+'.py'), 'r') as f:
         challenge = f.read().split('# STATIC')
-    print(challenge[1].strip().replace("# Don't change", "").replace('\n', '').replace('USERNAME', request.user.username))
-    print(json.loads(request.body.decode())['code'].split("# Don't change")[1].strip().replace('\n', ''))
-    if json.loads(request.body.decode())['code'].split("# Don't change")[1].strip().replace('\n', '') == challenge[1].strip().replace("# Don't change", "").replace('\n', '').replace('USERNAME', request.user.username) and output == request.user.username:
+
+    unchangeable = ""
+    for static in challenge[1].split("# Don't change"):
+        if len(static.split("# Change")) > 1:
+            clear = static.split("# Change")[1]
+            static.replace(clear, "")
+        unchangeable += static.strip()
+    static_code = ""
+    clear = ""
+    for static in json.loads(request.body.decode())['code'].split("# Don't change"):
+        static = static.strip()
+        if "#" in static and not "# Change" in static:
+            continue
+        if len(static.split("# Change")) > 1:
+            clear = static.split("# Change")[1]
+        static_code += static.replace(clear, "").replace("# Change", "").strip()
+
+    if static_code == unchangeable.replace('USERNAME', request.user.username) and output == request.user.username:
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
-    
