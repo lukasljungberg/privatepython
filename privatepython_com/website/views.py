@@ -147,21 +147,13 @@ def check_challenge(request: HttpRequest, course_name, section, output):
         challenge = f.read().split('# STATIC')
 
     unchangeable = ""
-    for static in challenge[1].split("# Don't change"):
-        if len(static.split("# Change")) > 1:
-            clear = static.split("# Change")[1]
-            static.replace(clear, "")
-        unchangeable += static.strip()
-    static_code = ""
-    clear = ""
-    for static in json.loads(request.body.decode())['code'].split("# Don't change"):
-        static = static.strip()
-        if "#" in static and not "# Change" in static:
-            continue
-        if len(static.split("# Change")) > 1:
-            clear = static.split("# Change")[1]
-        static_code += static.replace(clear, "").replace("# Change", "").strip()
-
-    if static_code == unchangeable.replace('USERNAME', request.user.username) and output == request.user.username:
+    unchangeable = challenge[1].split("# Don't change")[1].strip()
+    static_code = json.loads(request.body.decode())['code'].split("# Don't change")[1]
+    for nr in static_code.splitlines():
+        print(repr(nr))
+        if str(nr).isdigit():
+            static_code = static_code.replace(nr, "")
+            print(static_code)
+    if static_code.replace('\u200b', '').strip() == unchangeable.replace('USERNAME', request.user.username) and output == request.user.username:
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})

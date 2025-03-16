@@ -84,7 +84,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         const button = document.getElementById("sbmt-btn");
         button.addEventListener("click", function () {
-            const code = document.getElementById("code").innerText;
+            const code = document.getElementsByClassName("CodeMirror")[0].innerText;
+            console.log(document.getElementsByClassName("CodeMirror")[0].innerText);
             const output = document.getElementById("output").innerHTML;
             fetch('/check_challenge/{{course_name}}/{{section}}/'+output+'/', {
                 method: "POST",
