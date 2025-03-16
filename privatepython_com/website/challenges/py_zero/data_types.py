@@ -14,7 +14,7 @@ if not y and b:
     print(name if c and z[2] == 10 else "Try again!")
 # STATIC
 # Don't change
-name = "USERNAME"
+name = "USERNAME!"
 a = x in z
 b = x is b
 c = z[1] == x
