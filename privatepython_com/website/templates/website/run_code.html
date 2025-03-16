@@ -1,5 +1,5 @@
 {% extends 'website/run_code_base.html' %}
-
+{% load static %}
 {% block title %}IDE{% endblock %}
 
 {% block content %}
@@ -81,6 +81,8 @@
     <input type="text" id="package" placeholder="Enter package name">
     <button onclick="installPackage()">Install</button>
     <pre id="install-output"></pre>
+    <audio id="congratsSound" src="https://www.fesliyanstudios.com/play-mp3/6496" preload="auto"></audio>
+    <audio id="errorSound" src="{% static 'audio/error.mp3' %}" preload="auto"></audio>
 </div>
 <script>
     function launchConfetti() {
@@ -96,6 +98,7 @@
         const button = document.getElementById("sbmt-btn");
         button.addEventListener("click", function () {
             const code = document.getElementsByClassName("CodeMirror")[0].innerText;
+            const error = document.getElementById("errorSound");
             console.log(document.getElementsByClassName("CodeMirror")[0].innerText);
             const output = document.getElementById("output").innerHTML;
             fetch('/check_challenge/{{course_name}}/{{section}}/'+output+'/', {
@@ -113,14 +116,17 @@
             })
             .then(data => {
                 if (!data) {
+                    error.play();
                     alert("Wrong answer!");
                     return;
                 }
                 else if (data.success && output == '{{user.username}}') {
                     launchConfetti();
+                    document.getElementById('congratsSound').play();
                     document.getElementById("msg").innerHTML = "You've made it! On to the next one...";
                 } else {
                     alert("Wrong answer!");
+                    error.play();
                 }
             });
         });
