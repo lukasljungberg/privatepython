@@ -93,8 +93,8 @@ def course(request: HttpRequest, course_name):
         sections = [{'title': 'What is Python?', 'uri': 'what_is_python'},
                     {'title': 'Terminology', 'uri': 'terminology'},
                     {'title': 'Syntax', 'uri': 'syntax'},
-                    {'title': 'Is data type', 'uri': 'is_data_types'},
                     {'title': 'Data types', 'uri': 'data_types'},
+                    {'title': 'Is data type', 'uri': 'is_data_types'},
                     {'title': 'Classes and Funcitons', 'uri': 'class_and_function'},
                     {'title': 'Python Standard Library Modules', 'uri': 'python_standard_library_modules'},
                    ]
