@@ -11,10 +11,12 @@ c = {'msg': "Fail!"}
 name = "USERNAME"
 fail = "Try again!"
 if x <= y:
-    print(name if z == True and name not in a and z in b and c['msg'] == fail else fail)
+    if name not in a and z in b and c['msg'] == fail:
+        print(name if z == True else fail)
 # STATIC
 # Don't change
 name = "USERNAME"
 fail = "Try again!"
 if x <= y:
-    print(name if z == True and name not in a and z in b and c['msg'] == fail else fail)
+    if name not in a and z in b and c['msg'] == fail:
+        print(name if z == True else fail)
