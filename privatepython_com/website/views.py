@@ -94,8 +94,8 @@ def course(request: HttpRequest, course_name):
                     {'title': 'Terminology', 'uri': 'terminology'},
                     {'title': 'Syntax', 'uri': 'syntax'},
                     {'title': 'Data types', 'uri': 'data_types'},
-                    {'title': 'Is data type', 'uri': 'is_data_types'},
                     {'title': 'Classes and Funcitons', 'uri': 'class_and_function'},
+                    {'title': 'Is data type', 'uri': 'is_data_types'},
                     {'title': 'Python Standard Library Modules', 'uri': 'python_standard_library_modules'},
                    ]
     if course_name == "py_hero":
