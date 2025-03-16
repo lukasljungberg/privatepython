@@ -85,15 +85,15 @@ if DEBUG:
 else:
     # Don't forget to pip install psycopg2-binary on the server
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'yourdbname',
-        'USER': 'yourdbuser',
-        'PASSWORD': 'yourpassword',
-        'HOST': 'yourdbhost',
-        'PORT': '5432',
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'yourdbname',
+            'USER': 'yourdbuser',
+            'PASSWORD': 'yourpassword',
+            'HOST': 'yourdbhost',
+            'PORT': '5432',
+        }
     }
-}
 
 
 # Password validation
