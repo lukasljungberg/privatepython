@@ -160,6 +160,6 @@ def check_challenge(request: HttpRequest, course_name, section, output):
     unchangeable = unchangeable.replace('\n', '').strip().replace('USERNAME', request.user.username)
     print(static_code)
     print(unchangeable)
-    if static_code == unchangeable and output == request.user.username:
+    if static_code == unchangeable and output == "Hello " + request.user.username + "!":
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
