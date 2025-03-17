@@ -95,7 +95,7 @@ def course(request: HttpRequest, course_name):
                     {'title': 'Syntax', 'uri': 'syntax'},
                     {'title': 'Data types', 'uri': 'data_types'},
                     {'title': 'Classes and Funcitons', 'uri': 'class_and_function'},
-                    {'title': 'Is data type', 'uri': 'is_data_types'},
+                    {'title': 'Is instance?', 'uri': 'is_instance'},
                     {'title': 'Python Standard Library Modules', 'uri': 'python_standard_library_modules'},
                    ]
     if course_name == "py_hero":
@@ -152,7 +152,6 @@ def check_challenge(request: HttpRequest, course_name, section, output):
     unchangeable = challenge[1].split("# Don't change")[1].strip()
     static_code = json.loads(request.body.decode())['code'].split("# Don't change")[1]
     for nr in static_code.splitlines():
-        print(repr(nr))
         if str(nr).isdigit():
             static_code = static_code.replace(nr + '\n', "")
 
