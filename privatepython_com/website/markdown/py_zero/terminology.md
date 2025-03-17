@@ -68,7 +68,7 @@ print(math.sqrt(16))  # Outputs 4.0
 ```
 
 ### 9. **Exception Handling**
-A mechanism to handle runtime errors gracefully.
+A mechanism to handle runtime errors gracefully. (Runtime errors happens during runtime)
 ```python
 try:
     result = 10 / 0
@@ -84,6 +84,3 @@ The set of rules that define the structure of a programming language.
 
 ### 12. **Compiler & Interpreter**
 A compiler converts code into machine language before execution, while an interpreter translates code line by line during execution.
-
-## Conclusion
-This guide provides a fundamental understanding of common programming terms. Familiarizing yourself with these concepts will make learning programming easier and more effective.

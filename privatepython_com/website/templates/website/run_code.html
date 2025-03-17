@@ -63,7 +63,7 @@
             margin-left: 100px;
         }
         .out {
-            min-height: 200px;
+            min-height: 100px;
         }
     </style>
 </head>
@@ -76,7 +76,9 @@
         <pre id="output"></pre>
     </div>
     <h1 style="color: rgb(139, 207, 37);" id="msg"></h1>
-    <button id="sbmt-btn">Submit Code</button>
+    {% if "open_challenge" in request.path %}
+        <button id="sbmt-btn">Submit Code</button>
+    {% endif %}
     <h2>Package Installer</h2>
     <input type="text" id="package" placeholder="Enter package name">
     <button onclick="installPackage()">Install</button>
