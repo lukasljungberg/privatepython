@@ -1,7 +1,7 @@
 # Run the code to say "Hello USERNAME!"
 # Change
 class User:
-    x = "USERNAME"
+    x = "Hello USERNAME!"
     def present_user(self):
         return self.x
     

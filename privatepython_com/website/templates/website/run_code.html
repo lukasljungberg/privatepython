@@ -120,7 +120,7 @@
                     alert("Wrong answer!");
                     return;
                 }
-                else if (data.success && output == '{{user.username}}') {
+                else if (data.success && output == 'Hello {{user.username}}!') {
                     launchConfetti();
                     document.getElementById('congratsSound').play();
                     document.getElementById("msg").innerHTML = "You've made it! On to the next one...";

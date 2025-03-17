@@ -1,6 +1,6 @@
 # Run the code to say "Hello USERNAME!"
 # Change
-x = [False, True, "USERNAME"]
+x = [False, True, "Hello USERNAME!"]
 y = int(x)
 z = float(y)
 i = 0
