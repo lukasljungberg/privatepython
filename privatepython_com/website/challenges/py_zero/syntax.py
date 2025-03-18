@@ -5,17 +5,19 @@ y = None
 z = False
 
 a = "USERNAME123"
-b = [True, True, 1, 1]
+b = [False, False]
 c = {'msg': "Fail!"}
 
 # Don't change
 name = "Hello USERNAME!"
 fail = "Try again!"
+name_or_fail = name if z == True and name not in a and z in b and c['msg'] == fail else fail
 if x <= y:
-    print(name if z == True and name not in a and z in b and c['msg'] == fail else fail)
+    print(name_or_fail)
 # STATIC
 # Don't change
 name = "Hello USERNAME!"
 fail = "Try again!"
+name_or_fail = name if z == True and name not in a and z in b and c['msg'] == fail else fail
 if x <= y:
-    print(name if z == True and name not in a and z in b and c['msg'] == fail else fail)
+    print(name_or_fail)

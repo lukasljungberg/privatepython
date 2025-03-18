@@ -1,6 +1,6 @@
 # This is a comment
 # Run the code to say "Hello USERNAME!"
-# Assign the y to x
+# Assign the value of y to the value of x
 # Change
 x = "Hello USERNAME!"
 y = y
